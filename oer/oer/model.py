@@ -13,9 +13,6 @@ class Triple(Base):
 
 
 def load_session():
-    """"""
-
-    metadata = Base.metadata
     Session = sessionmaker(bind=engine)
     session = Session()
     return session

@@ -7,11 +7,11 @@ class GenericSpider(scrapy.Spider):
     name = "oasis"
     def start_requests(self):
         urls = [
-            'http://oasis.col.org/browse?value=Americas&type=region'
+            'http://oasis.col.org/browse?type=region'
         ]
         for url in urls:
             print("New Url", url)
-            yield scrapy.Request(url=url, callback=self.parse_list)
+            yield scrapy.Request(url=url, callback=self.parse)
 
     def parse_item(self, response):
         resp = response.xpath('//div[@id="aspect_artifactbrowser_ItemViewer_div_item-view"]').get()
