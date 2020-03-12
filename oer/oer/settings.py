@@ -9,7 +9,7 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'oasis'
+BOT_NAME = 'oers_spiders'
 
 SPIDER_MODULES = ['oer.spiders']
 NEWSPIDER_MODULE = 'oer.spiders'

@@ -3,12 +3,12 @@ from sqlalchemy.orm import mapper, sessionmaker
 from sqlalchemy import Column, Integer
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('mysql+pymysql://root:@localhost/oerintegrationdb', echo=True)
+engine = create_engine('mysql+pymysql://root:@localhost/oersdb', echo=True)
 Base = declarative_base(engine)
 
 
 class Triple(Base):
-    __tablename__ = 'triple'
+    __tablename__ = 'crawl'
     __table_args__ = {'autoload': True}
 
 
