@@ -1,37 +1,35 @@
-from operator import concat
 import scrapy
-
+from operator import concat
+from scrapy import Selector
 from ..items import *
 
 class GenericSpider(scrapy.Spider):
+
     name = "okr"
+
     def start_requests(self):
         urls = [
-            'https://openknowledge.worldbank.org/htmlmap'
+            'https://openknowledge.worldbank.org/browse?type=topic&value=Accommodation+and+Tourism+Industry'
         ]
         for url in urls:
             print("New Url", url)
             yield scrapy.Request(url=url, callback=self.parse)
 
-    def parse_item(self, response):
-        resp = response.xpath('//div[@id="aspect_artifactbrowser_ItemViewer_div_item-view"]').get()
-        yield TripleItem(subject=self.name, predicate="hasRaw", object=str(resp), source=response.url)
-
-    def parse_list(self, response):
-        next_page = response.xpath('//a/@href').getall()
-        next_page = ["%s%s" % (s, '?show=full') for s in next_page]
-        if next_page is not None:
-            for next in next_page:
-                print("Next : ", next)
-                yield response.follow(next, self.parse_item)
-        else:
-            print('next_page is None :(')
-
     def parse(self, response):
-        next = response.xpath('//a/@href').getall()
+        next = response.xpath('//*[@id="aspect_artifactbrowser_ConfigurableBrowse_div_browse-by-topic-results"]/ul/li/div/div/div/div/div/h4/a/@href').getall()
         if next is not None:
             for n in next:
-                print('Next topic : ', n)
-                yield response.follow(n, self.parse_list)
+                print('Next resource : ', n)
+                yield response.follow(n, self.parse_item)
         else:
             print('next is None :( ')
+
+    def parse_item(self, response):
+        # Get html of resource
+        html = response.xpath('//*[@id="main"]/div/div/div[2]/div').get()
+        titulo = Selector(text=html).xpath("//h2/text()").get()
+        print(titulo)
+
+
+
+

@@ -3,7 +3,7 @@ from sqlalchemy.orm import mapper, sessionmaker
 from sqlalchemy import Column, Integer
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('mysql+pymysql://root:@localhost/oersdb', echo=True)
+engine = create_engine('mysql+pymysql://scrapy:pwdScrapy!3@localhost/oersdb', echo=True)
 Base = declarative_base(engine)
 
 
